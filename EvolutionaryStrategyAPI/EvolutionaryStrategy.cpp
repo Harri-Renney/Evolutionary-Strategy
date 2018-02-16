@@ -23,7 +23,7 @@ float EvolutionaryStrategy::evolveParent()
 		std::vector<float> child;
 		for (int j = 0; j != parent.size(); ++j)
 		{
-			std::normal_distribution<double> distribution = std::normal_distribution<double>(parent[j].second, 0.2);
+			std::normal_distribution<double> distribution(parent[j].second, 0.2);
 			if ((rand() % 100) / 100.0 <= mutationRate)
 			{
 				child.push_back(parent[j].first + distribution(generator));

@@ -7,7 +7,7 @@ int main()
 {
 	for (int i = 0; i != 1000; ++i)
 	{
-		std::cout << "Stoopid noob" << std::endl;
+		std::cout << "Meep meep" << std::endl;
 	}
 	return 0;
 }
