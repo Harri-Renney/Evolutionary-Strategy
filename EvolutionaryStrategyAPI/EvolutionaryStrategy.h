@@ -15,7 +15,7 @@ public:
 	//////////////////
 	// Constructors //
 	//////////////////
-	EvolutionaryStrategy(int numberOfChildren, int numberOfGenome, float mutationRate, float mutationDistribution);
+	EvolutionaryStrategy(int numberOfGenome, int numberOfChildren, float mutationRate, float mutationDistribution);
 
 	float evolveParent();
 
@@ -28,8 +28,10 @@ public:
 	// Getters + Setters //
 	///////////////////////
 
+	void setGenome(std::vector<float> g);
+
 	std::vector<std::pair<float, float>>& getParent();
-	std::vector <float> getGenome();
+	std::vector<float> getGenome();
 	std::vector<float> getMutationDistribution();
 };
 

@@ -1,8 +1,10 @@
 #include <random>
+#include <cstdlib>
+#include <time.h>
 
 #include "EvolutionaryStrategy.h"
 
-EvolutionaryStrategy::EvolutionaryStrategy(int numberOfChildren, int numberOfGenome, float mutationRate, float mutationDistribution)
+EvolutionaryStrategy::EvolutionaryStrategy(int numberOfGenome, int numberOfChildren, float mutationRate, float mutationDistribution)
 {
 	this->numberOfChildren = numberOfChildren;
 	this->mutationRate = mutationRate;
@@ -15,6 +17,7 @@ EvolutionaryStrategy::EvolutionaryStrategy(int numberOfChildren, int numberOfGen
 float EvolutionaryStrategy::evolveParent()
 {
 	std::default_random_engine generator;
+	generator.seed(time(NULL));
 	std::vector<float> best;
 	for (int i = 0; i != parent.size(); ++i)
 		best.push_back(0);
@@ -29,19 +32,28 @@ float EvolutionaryStrategy::evolveParent()
 				child.push_back(parent[j].first + distribution(generator));
 			}
 			else
-				child.push_back(parent[j].second);
+				child.push_back(parent[j].first);
 		}
 		if (fitnessFunction(child) > fitnessFunction(getGenome()))
 			best = child;
 	}
-	if (fitnessFunction(best) > fitnessFunction(getGenome()))
-		getGenome() = best;
+	if (fitnessFunction(best) >= fitnessFunction(getGenome()))
+		setGenome(best);
 	return fitnessFunction(getGenome());
 }
 
 ///////////////////////
 // Getters + Setters //
 ///////////////////////
+
+void EvolutionaryStrategy::setGenome(std::vector<float> g)
+{
+	for (int i = 0; i != parent.size(); ++i)
+	{
+		std::pair<float, float> placeHolder = std::make_pair(g[i], parent[i].second);
+		parent[i] = placeHolder;
+	}
+}
 
 std::vector<std::pair<float, float> >& EvolutionaryStrategy::getParent()
 {

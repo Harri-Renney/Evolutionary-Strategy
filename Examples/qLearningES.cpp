@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 
-#include "../EvolutionaryStrategy.h"
+#include "../EvolutionaryStrategyAPI/EvolutionaryStrategy.h"
 
 int main()
 {
