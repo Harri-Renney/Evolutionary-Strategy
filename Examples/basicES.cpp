@@ -61,21 +61,21 @@ int main()
 {
 	std::cout << "This is a simple example of the Evolutionary Strategy API being used to solve a simple problem where the sum of all genomes must exceed: genomeLength * 1" << std::endl << std::endl;
 	std::cout << std::setprecision(2) << std::fixed;
-	SimpleGenome mg(3, 100, 0.1, 0.1);
+	SimpleGenome sg(3, 100, 0.1, 0.1);
 
 	int i = 0;
-	while (!mg.evaluateGenome())
+	while (!sg.evaluateGenome())
 	{
 		std::cout << "Genome Generation " << i << " : ";
-		mg.printSimpleGenome();
-		mg.evolveParent();
-		std::vector<float> temp = mg.getGenome();
-		mg.setSimpleGenome(temp);
+		sg.printSimpleGenome();
+		sg.evolveParent();
+		std::vector<float> temp = sg.getGenome();
+		sg.setSimpleGenome(temp);
 		++i;
 	}
 
 	std::cout << std::endl << "Final Genome: ";
-	mg.printSimpleGenome();
+	sg.printSimpleGenome();
 
 	int c;
 	std::cin >> c;
