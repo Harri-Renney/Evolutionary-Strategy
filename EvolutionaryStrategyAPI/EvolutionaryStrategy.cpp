@@ -4,18 +4,31 @@
 
 #include "EvolutionaryStrategy.h"
 
+using namespace ES;
+
+EvolutionaryStrategy::EvolutionaryStrategy()
+{
+	this->numberOfChildren = 10;
+	this->mutationRate = 0.1;
+	for (int i = 0; i != 10; ++i)
+	{
+		std::pair<float, float> placeHolder = std::make_pair(0.0 / 100.0, 0.001);
+		parent.push_back(placeHolder);
+	}
+}
 EvolutionaryStrategy::EvolutionaryStrategy(int numberOfGenome, int numberOfChildren, float mutationRate, float mutationDistribution)
 {
 	this->numberOfChildren = numberOfChildren;
 	this->mutationRate = mutationRate;
 	for (int i = 0; i != numberOfGenome; ++i)
 	{
-		std::pair<float, float> placeHolder = std::make_pair((rand() % 100) / 100.0, mutationDistribution);
+		std::pair<float, float> placeHolder = std::make_pair(0.0 / 100.0, mutationDistribution);
 		parent.push_back(placeHolder);
 	}
 }
 float EvolutionaryStrategy::evolveParent()
 {
+	std::vector<std::vector<float>> debugging;
 	std::default_random_engine generator;
 	generator.seed(time(NULL));
 	std::vector<float> best;
@@ -26,7 +39,7 @@ float EvolutionaryStrategy::evolveParent()
 		std::vector<float> child;
 		for (int j = 0; j != parent.size(); ++j)
 		{
-			std::normal_distribution<double> distribution(0.0, 0.2);
+			std::normal_distribution<double> distribution(0.0, parent[0].second);
 			if ((rand() % 100) / 100.0 <= mutationRate)
 			{
 				child.push_back( distribution(generator));
@@ -34,10 +47,10 @@ float EvolutionaryStrategy::evolveParent()
 			else
 				child.push_back(0);
 		}
-		if (fitnessFunction(child) > fitnessFunction(best))
+		if (fitnessFunction(child) >= fitnessFunction(best))
 			best = child;
 	}
-	if (fitnessFunction(best) >= fitnessFunction(getGenome()))
+	//if (fitnessFunction(best) >= fitnessFunction(getGenome()))
 		setGenome(best);
 	return fitnessFunction(getGenome());
 }

@@ -4,35 +4,42 @@
 #include <vector>
 #include <utility>
 
-class EvolutionaryStrategy {
-private:
-	int numberOfChildren;
-	float mutationRate;
+namespace ES {
+	typedef float genome;
+	typedef float mutationDistribution;
 
-	std::vector<std::pair<float, float>> parent;
+	class EvolutionaryStrategy {
+	private:
+		int numberOfChildren;
+		float mutationRate;
 
-public:
-	//////////////////
-	// Constructors //
-	//////////////////
-	EvolutionaryStrategy(int numberOfGenome, int numberOfChildren, float mutationRate, float mutationDistribution);
+		std::vector<std::pair<genome, mutationDistribution>> parent;
 
-	float evolveParent();
+	public:
+		//////////////////
+		// Constructors //
+		//////////////////
+		EvolutionaryStrategy();
+		EvolutionaryStrategy(int numberOfGenome, int numberOfChildren, float mutationRate, float mutationDistribution);
 
-	/////////////////////////////////////////////////////////////////////////////////////////
-	// Fitness function. Inherit and define to decide how genome is evaluated for fitness. //
-	/////////////////////////////////////////////////////////////////////////////////////////
-	virtual float fitnessFunction(std::vector<float> genome) = 0;
+		float evolveParent();
 
-	///////////////////////
-	// Getters + Setters //
-	///////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////
+		// Fitness function. Inherit and define to decide how genome is evaluated for fitness. //
+		/////////////////////////////////////////////////////////////////////////////////////////
+		virtual float fitnessFunction(std::vector<float> genome) = 0;
 
-	void setGenome(std::vector<float> g);
+		///////////////////////
+		// Getters + Setters //
+		///////////////////////
 
-	std::vector<std::pair<float, float>>& getParent();
-	std::vector<float> getGenome();
-	std::vector<float> getMutationDistribution();
-};
+		void setGenome(std::vector<float> g);
+
+		std::vector<std::pair<float, float>>& getParent();
+		std::vector<float> getGenome();
+		std::vector<float> getMutationDistribution();
+	};
+
+}
 
 #endif
